@@ -33,6 +33,7 @@
             fbdFolder = new FolderBrowserDialog();
             tbarThreshold = new TrackBar();
             butScan = new Button();
+            pBarScan = new ProgressBar();
             ((System.ComponentModel.ISupportInitialize)dgvDuplicates).BeginInit();
             ((System.ComponentModel.ISupportInitialize)tbarThreshold).BeginInit();
             SuspendLayout();
@@ -42,7 +43,7 @@
             dgvDuplicates.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvDuplicates.Location = new Point(12, 63);
             dgvDuplicates.Name = "dgvDuplicates";
-            dgvDuplicates.Size = new Size(776, 375);
+            dgvDuplicates.Size = new Size(776, 602);
             dgvDuplicates.TabIndex = 0;
             // 
             // butChooseDirectory
@@ -61,10 +62,11 @@
             tbarThreshold.Location = new Point(258, 12);
             tbarThreshold.Maximum = 100;
             tbarThreshold.Name = "tbarThreshold";
-            tbarThreshold.Size = new Size(530, 45);
+            tbarThreshold.Size = new Size(292, 45);
             tbarThreshold.SmallChange = 10;
             tbarThreshold.TabIndex = 2;
             tbarThreshold.TickFrequency = 5;
+            tbarThreshold.Value = 50;
             // 
             // butScan
             // 
@@ -76,11 +78,19 @@
             butScan.UseVisualStyleBackColor = true;
             butScan.Click += butScan_Click;
             // 
+            // pBarScan
+            // 
+            pBarScan.Location = new Point(556, 12);
+            pBarScan.Name = "pBarScan";
+            pBarScan.Size = new Size(232, 45);
+            pBarScan.TabIndex = 4;
+            // 
             // DeDupeForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(800, 677);
+            Controls.Add(pBarScan);
             Controls.Add(butScan);
             Controls.Add(tbarThreshold);
             Controls.Add(butChooseDirectory);
@@ -100,5 +110,6 @@
         private FolderBrowserDialog fbdFolder;
         private TrackBar tbarThreshold;
         private Button butScan;
+        private ProgressBar pBarScan;
     }
 }

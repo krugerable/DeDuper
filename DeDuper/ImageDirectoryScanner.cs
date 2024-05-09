@@ -1,5 +1,9 @@
 ﻿using DeDuper;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
+using System.Linq;
 
 public class ImageDirectoryScanner
 {
@@ -16,18 +20,22 @@ public class ImageDirectoryScanner
         this.DuplicateImages = new BindingList<DuplicateImage>();
     }
 
-    public void ScanForDuplicates(string directoryPath)
+    public void ScanForDuplicates(string directoryPath, IProgress<int>? progress = null)
     {
         if (!Directory.Exists(directoryPath))
         {
             throw new ArgumentException("Directory does not exist.");
         }
 
+        string[] files = Directory.GetFiles(directoryPath, "*.jpg");
+        int totalFiles = files.Length;
+        int processedFiles = 0;
+
         Dictionary<string, List<string>> hashGroups = new Dictionary<string, List<string>>();
         Dictionary<string, int> groupIds = new Dictionary<string, int>();
         int groupId = 0;
 
-        foreach (string file in Directory.GetFiles(directoryPath, "*.jpg"))
+        foreach (string file in files)
         {
             try
             {
@@ -51,12 +59,17 @@ public class ImageDirectoryScanner
                     groupId++;
                     hashGroups[hash] = new List<string> { file };
                     groupIds[hash] = groupId;
-                    DuplicateImages.Add(new DuplicateImage { GroupId = groupId, ImagePath = file, SimilarityScore = 0 });  // No similarity score as it's the first in the group
+                    DuplicateImages.Add(new DuplicateImage { GroupId = groupId, ImagePath = file, SimilarityScore = 0 });
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error processing file {file}: {ex.Message}");
+            }
+            finally
+            {
+                processedFiles++;
+                progress?.Report((processedFiles * 100) / totalFiles);
             }
         }
     }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace DeDuper
 {
@@ -27,16 +28,24 @@ namespace DeDuper
             }
         }
 
-        private void butScan_Click(object sender, EventArgs e)
+        private async void butScan_Click(object sender, EventArgs e)
         {
-            // Inside your Form Load event or appropriate method
-            ImageDirectoryScanner scanner = new ImageDirectoryScanner(tbarThreshold.Value);  // Adjust the threshold as needed
-            scanner.ScanForDuplicates(strFolderName);
-            dgvDuplicates.DataSource = scanner.DuplicateImages;
-            dgvDuplicates.Columns["GroupId"].HeaderText = "Group ID";
-            dgvDuplicates.Columns["ImagePath"].HeaderText = "Image Path";
-            dgvDuplicates.Columns["SimilarityScore"].HeaderText = "Similarity Score";
+            ImageDirectoryScanner scanner = new ImageDirectoryScanner(tbarThreshold.Value);
+            var progress = new Progress<int>(percent =>
+            {
+                pBarScan.Value = percent;
+            });
 
+            if (strFolderName == "")
+            {
+                MessageBox.Show("Please select a folder to scan.");
+                return;
+            }
+            else
+            {
+                await Task.Run(() => scanner.ScanForDuplicates(strFolderName, progress));
+                dgvDuplicates.DataSource = scanner.DuplicateImages;
+            }  
         }
     }
 }
