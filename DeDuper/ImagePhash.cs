@@ -1,36 +1,30 @@
-﻿using System.Drawing.Imaging;
+using System.Drawing.Imaging;
 using System.Text;
 
 public class ImagePhash
 {
+    // Computes the perceptual hash of an image.
     public static string ComputePhash(string imagePath)
     {
         using (Bitmap original = new Bitmap(imagePath))
         {
-            // Resize the image to a smaller, fixed size
+            // Resize the image to 8x8 pixels to simplify the hash computation.
             using (Bitmap resized = new Bitmap(original, new Size(8, 8)))
             {
-                // Convert to grayscale
+                // Convert the resized image to grayscale.
                 using (Bitmap grayScaled = ConvertToGrayscale(resized))
                 {
-                    // Compute average color of the grayscale image
+                    // Compute the average color value of the grayscale image.
                     double average = ComputeAverageColor(grayScaled);
 
-                    // Create the hash
+                    // Create the hash based on the pixels being above or below the average color.
                     StringBuilder hash = new StringBuilder();
                     for (int i = 0; i < grayScaled.Height; i++)
                     {
                         for (int j = 0; j < grayScaled.Width; j++)
                         {
                             Color pixel = grayScaled.GetPixel(j, i);
-                            if (pixel.R < average) // pixel.R, pixel.G, and pixel.B are the same in grayscale
-                            {
-                                hash.Append('0');
-                            }
-                            else
-                            {
-                                hash.Append('1');
-                            }
+                            hash.Append(pixel.R < average ? '0' : '1');
                         }
                     }
 
@@ -40,30 +34,29 @@ public class ImagePhash
         }
     }
 
+    // Converts an image to grayscale.
     private static Bitmap ConvertToGrayscale(Bitmap image)
     {
         Bitmap grayscale = new Bitmap(image.Width, image.Height);
-
         using (Graphics g = Graphics.FromImage(grayscale))
         {
             ColorMatrix colorMatrix = new ColorMatrix(
                 new float[][]
                 {
-                    new float[] { 0.3f, 0.3f, 0.3f, 0, 0 },
-                    new float[] { 0.59f, 0.59f, 0.59f, 0, 0 },
-                    new float[] { 0.11f, 0.11f, 0.11f, 0, 0 },
-                    new float[] { 0, 0, 0, 1, 0 },
-                    new float[] { 0, 0, 0, 0, 1 }
+                    new float[] {0.3f, 0.3f, 0.3f, 0, 0},
+                    new float[] {0.59f, 0.59f, 0.59f, 0, 0},
+                    new float[] {0.11f, 0.11f, 0.11f, 0, 0},
+                    new float[] {0, 0, 0, 1, 0},
+                    new float[] {0, 0, 0, 0, 1}
                 });
-
             ImageAttributes attributes = new ImageAttributes();
             attributes.SetColorMatrix(colorMatrix);
             g.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, attributes);
         }
-
         return grayscale;
     }
 
+    // Computes the average color value of a grayscale image.
     private static double ComputeAverageColor(Bitmap image)
     {
         double total = 0;
@@ -78,6 +71,7 @@ public class ImagePhash
         return total / (image.Width * image.Height);
     }
 
+    // Computes the Hamming distance between two hashes to measure similarity.
     public static int ComputeHammingDistance(string hash1, string hash2)
     {
         if (hash1.Length != hash2.Length)
@@ -96,4 +90,3 @@ public class ImagePhash
         return distance;
     }
 }
-
