@@ -54,7 +54,7 @@
             butChooseDirectory.TabIndex = 1;
             butChooseDirectory.Text = "Choose directory";
             butChooseDirectory.UseVisualStyleBackColor = true;
-            butChooseDirectory.Click += butChooseDirectory_Click;
+            butChooseDirectory.Click += ButChooseDirectory_Click;
             // 
             // tbarThreshold
             // 
@@ -68,6 +68,7 @@
             tbarThreshold.TabIndex = 2;
             tbarThreshold.TickFrequency = 5;
             tbarThreshold.Value = 50;
+            tbarThreshold.MouseUp += tbarThreshold_MouseUp;
             // 
             // butScan
             // 
@@ -77,7 +78,7 @@
             butScan.TabIndex = 3;
             butScan.Text = "Scan";
             butScan.UseVisualStyleBackColor = true;
-            butScan.Click += butScan_Click;
+            butScan.Click += ButScan_Click;
             // 
             // pBarScan
             // 
@@ -98,6 +99,7 @@
             Controls.Add(dgvDuplicates);
             Name = "DeDupeForm";
             Text = "Dedupe";
+            Load += DeDupeForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgvDuplicates).EndInit();
             ((System.ComponentModel.ISupportInitialize)tbarThreshold).EndInit();
             ResumeLayout(false);

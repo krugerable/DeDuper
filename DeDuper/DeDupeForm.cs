@@ -20,7 +20,7 @@ namespace DeDuper
 
         private string strFolderName = "";
 
-        private void butChooseDirectory_Click(object sender, EventArgs e)
+        private void ButChooseDirectory_Click(object sender, EventArgs e)
         {
             if (fbdFolder.ShowDialog() == DialogResult.OK)
             {
@@ -28,9 +28,9 @@ namespace DeDuper
             }
         }
 
-        private async void butScan_Click(object sender, EventArgs e)
+        private async void ButScan_Click(object sender, EventArgs e)
         {
-            ImageDirectoryScanner scanner = new ImageDirectoryScanner(tbarThreshold.Value);
+            ImageDirectoryScanner scanner = new(tbarThreshold.Value);
             var progress = new Progress<int>(percent =>
             {
                 pBarScan.Value = percent;
@@ -45,7 +45,47 @@ namespace DeDuper
             {
                 await Task.Run(() => scanner.ScanForDuplicates(strFolderName, progress));
                 dgvDuplicates.DataSource = scanner.DuplicateImages;
-            }  
+            }
+        }
+
+        private async void tbarThreshold_MouseUp(object sender, MouseEventArgs e)
+        {
+            ImageDirectoryScanner scanner = new(tbarThreshold.Value);
+            var progress = new Progress<int>(percent =>
+            {
+                pBarScan.Value = percent;
+            });
+
+            if (strFolderName == "")
+            {
+                MessageBox.Show("Please select a folder to scan.");
+                return;
+            }
+            else
+            {
+                await Task.Run(() => scanner.ScanForDuplicates(strFolderName, progress));
+                dgvDuplicates.DataSource = scanner.DuplicateImages;
+            }
+        }
+
+        private async void DeDupeForm_Load(object sender, EventArgs e)
+        {
+            ImageDirectoryScanner scanner = new(tbarThreshold.Value);
+            var progress = new Progress<int>(percent =>
+            {
+                pBarScan.Value = percent;
+            });
+
+            if (strFolderName == "")
+            {
+                MessageBox.Show("Please select a folder to scan.");
+                return;
+            }
+            else
+            {
+                await Task.Run(() => scanner.ScanForDuplicates(strFolderName, progress));
+                dgvDuplicates.DataSource = scanner.DuplicateImages;
+            }
         }
     }
 }
