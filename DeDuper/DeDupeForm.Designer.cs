@@ -61,6 +61,7 @@
             tbarThreshold.LargeChange = 20;
             tbarThreshold.Location = new Point(258, 12);
             tbarThreshold.Maximum = 100;
+            tbarThreshold.Minimum = 1;
             tbarThreshold.Name = "tbarThreshold";
             tbarThreshold.Size = new Size(292, 45);
             tbarThreshold.SmallChange = 10;
