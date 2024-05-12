@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-
-namespace DeDuper
+﻿namespace DeDuper
 {
     public partial class DeDupeForm : Form
     {
@@ -77,6 +66,11 @@ namespace DeDuper
         {
             if (dgvDuplicates.SelectedRows.Count > 0)
                 PreviewSelectedImage.Image = Image.FromFile((string?)dgvDuplicates.SelectedRows[0].Cells[1].Value);
+        }
+
+        private void butMethodSelection_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

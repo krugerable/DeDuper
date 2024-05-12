@@ -39,17 +39,25 @@
             PreviewSelectedImage = new PictureBox();
             Dvgvg = new Subro.Controls.DataGridViewGrouper(components);
             butGroup = new Button();
+            rbAvHash = new RadioButton();
+            gbAlgoSelection = new GroupBox();
+            rbFbComp = new RadioButton();
+            rbDifHash = new RadioButton();
+            rbPixComp = new RadioButton();
+            rbPHash = new RadioButton();
+            butMethodSelection = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvDuplicates).BeginInit();
             ((System.ComponentModel.ISupportInitialize)tbarThreshold).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PreviewSelectedImage).BeginInit();
+            gbAlgoSelection.SuspendLayout();
             SuspendLayout();
             // 
             // dgvDuplicates
             // 
             dgvDuplicates.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDuplicates.Location = new Point(12, 63);
+            dgvDuplicates.Location = new Point(12, 112);
             dgvDuplicates.Name = "dgvDuplicates";
-            dgvDuplicates.Size = new Size(776, 243);
+            dgvDuplicates.Size = new Size(776, 553);
             dgvDuplicates.TabIndex = 0;
             dgvDuplicates.RowEnter += dgvDuplicates_RowEnter;
             // 
@@ -66,11 +74,11 @@
             // tbarThreshold
             // 
             tbarThreshold.LargeChange = 20;
-            tbarThreshold.Location = new Point(378, 12);
+            tbarThreshold.Location = new Point(498, 12);
             tbarThreshold.Maximum = 100;
             tbarThreshold.Minimum = 1;
             tbarThreshold.Name = "tbarThreshold";
-            tbarThreshold.Size = new Size(308, 45);
+            tbarThreshold.Size = new Size(290, 45);
             tbarThreshold.SmallChange = 10;
             tbarThreshold.TabIndex = 2;
             tbarThreshold.TickFrequency = 5;
@@ -89,16 +97,16 @@
             // 
             // pBarScan
             // 
-            pBarScan.Location = new Point(692, 12);
+            pBarScan.Location = new Point(794, 12);
             pBarScan.Name = "pBarScan";
-            pBarScan.Size = new Size(96, 45);
+            pBarScan.Size = new Size(355, 45);
             pBarScan.TabIndex = 4;
             // 
             // PreviewSelectedImage
             // 
-            PreviewSelectedImage.Location = new Point(12, 312);
+            PreviewSelectedImage.Location = new Point(794, 112);
             PreviewSelectedImage.Name = "PreviewSelectedImage";
-            PreviewSelectedImage.Size = new Size(776, 353);
+            PreviewSelectedImage.Size = new Size(355, 240);
             PreviewSelectedImage.SizeMode = PictureBoxSizeMode.StretchImage;
             PreviewSelectedImage.TabIndex = 5;
             PreviewSelectedImage.TabStop = false;
@@ -110,7 +118,7 @@
             // 
             // butGroup
             // 
-            butGroup.Location = new Point(258, 12);
+            butGroup.Location = new Point(378, 12);
             butGroup.Name = "butGroup";
             butGroup.Size = new Size(114, 45);
             butGroup.TabIndex = 6;
@@ -118,11 +126,94 @@
             butGroup.UseVisualStyleBackColor = true;
             butGroup.Click += butGroup_Click;
             // 
+            // rbAvHash
+            // 
+            rbAvHash.AutoSize = true;
+            rbAvHash.Location = new Point(6, 18);
+            rbAvHash.Name = "rbAvHash";
+            rbAvHash.Size = new Size(115, 19);
+            rbAvHash.TabIndex = 7;
+            rbAvHash.Tag = "1";
+            rbAvHash.Text = "Average Hashing";
+            rbAvHash.UseVisualStyleBackColor = true;
+            // 
+            // gbAlgoSelection
+            // 
+            gbAlgoSelection.Controls.Add(rbFbComp);
+            gbAlgoSelection.Controls.Add(rbDifHash);
+            gbAlgoSelection.Controls.Add(rbPixComp);
+            gbAlgoSelection.Controls.Add(rbPHash);
+            gbAlgoSelection.Controls.Add(rbAvHash);
+            gbAlgoSelection.Location = new Point(12, 63);
+            gbAlgoSelection.Name = "gbAlgoSelection";
+            gbAlgoSelection.Size = new Size(776, 43);
+            gbAlgoSelection.TabIndex = 8;
+            gbAlgoSelection.TabStop = false;
+            gbAlgoSelection.Text = "Detection method selection";
+            // 
+            // rbFbComp
+            // 
+            rbFbComp.AutoSize = true;
+            rbFbComp.Location = new Point(562, 18);
+            rbFbComp.Name = "rbFbComp";
+            rbFbComp.Size = new Size(168, 19);
+            rbFbComp.TabIndex = 11;
+            rbFbComp.Tag = "5";
+            rbFbComp.Text = "Feature-based Comparison";
+            rbFbComp.UseVisualStyleBackColor = true;
+            // 
+            // rbDifHash
+            // 
+            rbDifHash.AutoSize = true;
+            rbDifHash.Location = new Point(270, 18);
+            rbDifHash.Name = "rbDifHash";
+            rbDifHash.Size = new Size(126, 19);
+            rbDifHash.TabIndex = 10;
+            rbDifHash.Tag = "3";
+            rbDifHash.Text = "Difference Hashing";
+            rbDifHash.UseVisualStyleBackColor = true;
+            // 
+            // rbPixComp
+            // 
+            rbPixComp.AutoSize = true;
+            rbPixComp.Location = new Point(402, 18);
+            rbPixComp.Name = "rbPixComp";
+            rbPixComp.Size = new Size(154, 19);
+            rbPixComp.TabIndex = 9;
+            rbPixComp.Tag = "4";
+            rbPixComp.Text = "Pixel-based Comparison";
+            rbPixComp.UseVisualStyleBackColor = true;
+            // 
+            // rbPHash
+            // 
+            rbPHash.AutoSize = true;
+            rbPHash.Checked = true;
+            rbPHash.Location = new Point(136, 18);
+            rbPHash.Name = "rbPHash";
+            rbPHash.Size = new Size(128, 19);
+            rbPHash.TabIndex = 8;
+            rbPHash.TabStop = true;
+            rbPHash.Tag = "2";
+            rbPHash.Text = "Perceptual Hashing";
+            rbPHash.UseVisualStyleBackColor = true;
+            // 
+            // butMethodSelection
+            // 
+            butMethodSelection.Location = new Point(258, 12);
+            butMethodSelection.Name = "butMethodSelection";
+            butMethodSelection.Size = new Size(114, 45);
+            butMethodSelection.TabIndex = 9;
+            butMethodSelection.Text = "Method Scan";
+            butMethodSelection.UseVisualStyleBackColor = true;
+            butMethodSelection.Click += butMethodSelection_Click;
+            // 
             // DeDupeForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 677);
+            ClientSize = new Size(1161, 677);
+            Controls.Add(butMethodSelection);
+            Controls.Add(gbAlgoSelection);
             Controls.Add(butGroup);
             Controls.Add(PreviewSelectedImage);
             Controls.Add(pBarScan);
@@ -136,6 +227,8 @@
             ((System.ComponentModel.ISupportInitialize)dgvDuplicates).EndInit();
             ((System.ComponentModel.ISupportInitialize)tbarThreshold).EndInit();
             ((System.ComponentModel.ISupportInitialize)PreviewSelectedImage).EndInit();
+            gbAlgoSelection.ResumeLayout(false);
+            gbAlgoSelection.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -151,5 +244,12 @@
         private PictureBox PreviewSelectedImage;
         private Subro.Controls.DataGridViewGrouper Dvgvg;
         private Button butGroup;
+        private RadioButton rbAvHash;
+        private GroupBox gbAlgoSelection;
+        private RadioButton rbDifHash;
+        private RadioButton rbPixComp;
+        private RadioButton rbPHash;
+        private RadioButton rbFbComp;
+        private Button butMethodSelection;
     }
 }
