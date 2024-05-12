@@ -67,36 +67,20 @@ namespace DeDuper
         }
 
         /// <summary>
-        /// Determines if two images are duplicates based on average hash.
+        /// Standardizes two images to a common size.
         /// </summary>
-        /// <param name="image1">First image to compare.</param>
-        /// <param name="image2">Second image to compare.</param>
-        /// <param name="threshold">Threshold for Hamming distance to consider images as duplicates.</param>
-        /// <returns>True if images are considered duplicates.</returns>
-        public bool AreDuplicatesAverageHash(Bitmap image1, Bitmap image2, int threshold = 10)
+        /// <param name="image1">First image to standardize.</param>
+        /// <param name="image2">Second image to standardize.</param>
+        /// <returns>A tuple containing both standardized images.</returns>
+        private (Bitmap, Bitmap) StandardizeImages(Bitmap image1, Bitmap image2)
         {
-            try
-            {
-                string hash1 = ComputeAverageHash(image1);
-                string hash2 = ComputeAverageHash(image2);
-                return CalculateHammingDistance(hash1, hash2) <= threshold;
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("Error checking duplicates using average hash.", ex);
-            }
-        }
+            const int standardWidth = 256;
+            const int standardHeight = 256;
 
-        /// <summary>
-        /// Asynchronously determines if two images are duplicates using average hash.
-        /// </summary>
-        /// <param name="image1">First image to compare.</param>
-        /// <param name="image2">Second image to compare.</param>
-        /// <param name="threshold">Threshold for Hamming distance to consider images as duplicates.</param>
-        /// <returns>Task that returns true if images are considered duplicates.</returns>
-        public async Task<bool> AreDuplicatesAverageHashAsync(Bitmap image1, Bitmap image2, int threshold = 10)
-        {
-            return await Task.Run(() => AreDuplicates_AverageHash(image1, image2, threshold));
+            var standardizedImage1 = new Bitmap(image1, new Size(standardWidth, standardHeight));
+            var standardizedImage2 = new Bitmap(image2, new Size(standardWidth, standardHeight));
+
+            return (standardizedImage1, standardizedImage2);
         }
 
         /// <summary>
@@ -134,6 +118,39 @@ namespace DeDuper
             {
                 throw new InvalidOperationException("Failed to compute perceptual hash.", ex);
             }
+        }
+
+        /// <summary>
+        /// Determines if two images are duplicates based on average hash.
+        /// </summary>
+        /// <param name="image1">First image to compare.</param>
+        /// <param name="image2">Second image to compare.</param>
+        /// <param name="threshold">Threshold for Hamming distance to consider images as duplicates.</param>
+        /// <returns>True if images are considered duplicates.</returns>
+        public bool AreDuplicatesAverageHash(Bitmap image1, Bitmap image2, int threshold = 10)
+        {
+            try
+            {
+                string hash1 = ComputeAverageHash(image1);
+                string hash2 = ComputeAverageHash(image2);
+                return CalculateHammingDistance(hash1, hash2) <= threshold;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error checking duplicates using average hash.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Asynchronously determines if two images are duplicates using average hash.
+        /// </summary>
+        /// <param name="image1">First image to compare.</param>
+        /// <param name="image2">Second image to compare.</param>
+        /// <param name="threshold">Threshold for Hamming distance to consider images as duplicates.</param>
+        /// <returns>Task that returns true if images are considered duplicates.</returns>
+        public async Task<bool> AreDuplicatesAverageHashAsync(Bitmap image1, Bitmap image2, int threshold = 10)
+        {
+            return await Task.Run(() => AreDuplicates_AverageHash(image1, image2, threshold));
         }
 
         /// <summary>
@@ -202,23 +219,6 @@ namespace DeDuper
         public async Task<bool> AreDuplicates_AverageHashAsync(Bitmap image1, Bitmap image2, int threshold = 10)
         {
             return await Task.Run(() => AreDuplicates_AverageHash(image1, image2, threshold));
-        }
-
-        /// <summary>
-        /// Standardizes two images to a common size.
-        /// </summary>
-        /// <param name="image1">First image to standardize.</param>
-        /// <param name="image2">Second image to standardize.</param>
-        /// <returns>A tuple containing both standardized images.</returns>
-        private (Bitmap, Bitmap) StandardizeImages(Bitmap image1, Bitmap image2)
-        {
-            const int standardWidth = 256;
-            const int standardHeight = 256;
-
-            var standardizedImage1 = new Bitmap(image1, new Size(standardWidth, standardHeight));
-            var standardizedImage2 = new Bitmap(image2, new Size(standardWidth, standardHeight));
-
-            return (standardizedImage1, standardizedImage2);
         }
 
         /// <summary>
