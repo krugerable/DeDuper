@@ -8,4 +8,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <StartupObject>DeDuper.Program</StartupObject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DataGridViewGrouper\DataGridViewGrouper\DataGridViewGrouper.csproj" />
+  </ItemGroup>
 </Project>
