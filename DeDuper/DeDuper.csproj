@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="13.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\DataGridViewGrouper\DataGridViewGrouper\DataGridViewGrouper.csproj" />
   </ItemGroup>
 </Project>
