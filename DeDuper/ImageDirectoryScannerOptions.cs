@@ -38,7 +38,7 @@ namespace DeDuper
                             areDuplicates = await detector.AreDuplicatesPerceptualHashAsync(files[i], files[j]);
                             break;
                         case 3: // Difference Hash
-                            areDuplicates = await detector.(new Bitmap(files[i]), new Bitmap(files[j]));
+                            areDuplicates = await detector.AreDuplicates_DifferenceHashAsync(new Bitmap(files[i]), new Bitmap(files[j]));
                             break;
                         case 4: // Pixel Comparison
                             areDuplicates = await detector.AreDuplicates_PixelComparisonAsync(new Bitmap(files[i]), new Bitmap(files[j]));
