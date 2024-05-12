@@ -1,8 +1,5 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
+﻿using System.Drawing.Imaging;
 using System.Text;
-using System.Threading.Tasks;
 using ImageMagick;
 
 namespace DeDuper
@@ -76,7 +73,7 @@ namespace DeDuper
         /// <param name="image2">Second image to compare.</param>
         /// <param name="threshold">Threshold for Hamming distance to consider images as duplicates.</param>
         /// <returns>True if images are considered duplicates.</returns>
-        public bool AreDuplicates_AverageHash(Bitmap image1, Bitmap image2, int threshold = 10)
+        public bool AreDuplicatesAverageHash(Bitmap image1, Bitmap image2, int threshold = 10)
         {
             try
             {
@@ -97,7 +94,7 @@ namespace DeDuper
         /// <param name="image2">Second image to compare.</param>
         /// <param name="threshold">Threshold for Hamming distance to consider images as duplicates.</param>
         /// <returns>Task that returns true if images are considered duplicates.</returns>
-        public async Task<bool> AreDuplicates_AverageHashAsync(Bitmap image1, Bitmap image2, int threshold = 10)
+        public async Task<bool> AreDuplicatesAverageHashAsync(Bitmap image1, Bitmap image2, int threshold = 10)
         {
             return await Task.Run(() => AreDuplicates_AverageHash(image1, image2, threshold));
         }
@@ -146,7 +143,7 @@ namespace DeDuper
         /// <param name="imagePath2">Second image file path.</param>
         /// <param name="threshold">Threshold for Hamming distance to consider images as duplicates.</param>
         /// <returns>True if images are considered duplicates.</returns>
-        public bool AreDuplicates_PerceptualHash(string imagePath1, string imagePath2, int threshold = 10)
+        public bool AreDuplicatesPerceptualHash(string imagePath1, string imagePath2, int threshold = 10)
         {
             try
             {
@@ -168,13 +165,145 @@ namespace DeDuper
         /// <param name="imagePath2">Second image file path.</param>
         /// <param name="threshold">Threshold for Hamming distance to consider images as duplicates.</param>
         /// <returns>Task that returns true if images are considered duplicates.</returns>
-        public async Task<bool> AreDuplicates_PerceptualHashAsync(string imagePath1, string imagePath2, int threshold = 10)
+        public async Task<bool> AreDuplicatesPerceptualHashAsync(string imagePath1, string imagePath2, int threshold = 10)
         {
-            return await Task.Run(() => AreDuplicates_PerceptualHash(imagePath1, imagePath2, threshold));
+            return await Task.Run(() => AreDuplicatesPerceptualHash(imagePath1, imagePath2, threshold));
         }
 
+        /// <summary>
+        /// Determines if two images are duplicates based on average hash.
+        /// </summary>
+        /// <param name="image1">First image to compare.</param>
+        /// <param name="image2">Second image to compare.</param>
+        /// <param name="threshold">Threshold for Hamming distance to consider images as duplicates.</param>
+        /// <returns>True if images are considered duplicates.</returns>
+        public bool AreDuplicates_AverageHash(Bitmap image1, Bitmap image2, int threshold = 10)
+        {
+            try
+            {
+                string hash1 = ComputeAverageHash(image1);
+                string hash2 = ComputeAverageHash(image2);
+                int distance = CalculateHammingDistance(hash1, hash2);
+                return distance <= threshold;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error checking duplicates using average hash.", ex);
+            }
+        }
 
-        // Additional methods for pHash, dHash, Pixel Comparison, and Feature Based are omitted for brevity
-        // but would follow similar patterns of error handling, asynchronous execution, and documentation.
+        /// <summary>
+        /// Asynchronously determines if two images are duplicates using average hash.
+        /// </summary>
+        /// <param name="image1">First image to compare.</param>
+        /// <param name="image2">Second image to compare.</param>
+        /// <param name="threshold">Threshold for Hamming distance to consider images as duplicates.</param>
+        /// <returns>Task that returns true if images are considered duplicates.</returns>
+        public async Task<bool> AreDuplicates_AverageHashAsync(Bitmap image1, Bitmap image2, int threshold = 10)
+        {
+            return await Task.Run(() => AreDuplicates_AverageHash(image1, image2, threshold));
+        }
+
+        /// <summary>
+        /// Standardizes two images to a common size.
+        /// </summary>
+        /// <param name="image1">First image to standardize.</param>
+        /// <param name="image2">Second image to standardize.</param>
+        /// <returns>A tuple containing both standardized images.</returns>
+        private (Bitmap, Bitmap) StandardizeImages(Bitmap image1, Bitmap image2)
+        {
+            const int standardWidth = 256;
+            const int standardHeight = 256;
+
+            var standardizedImage1 = new Bitmap(image1, new Size(standardWidth, standardHeight));
+            var standardizedImage2 = new Bitmap(image2, new Size(standardWidth, standardHeight));
+
+            return (standardizedImage1, standardizedImage2);
+        }
+
+        /// <summary>
+        /// Determines if two images are duplicates by comparing each pixel, after standardizing their dimensions.
+        /// </summary>
+        /// <param name="image1">First image to compare.</param>
+        /// <param name="image2">Second image to compare.</param>
+        /// <param name="threshold">Threshold for similarity ratio to consider images as duplicates.</param>
+        /// <returns>True if the similarity ratio is above the threshold.</returns>
+        public bool AreDuplicates_PixelComparison(Bitmap image1, Bitmap image2, double threshold = 0.95)
+        {
+            try
+            {
+                (image1, image2) = StandardizeImages(image1, image2);
+
+                int totalPixels = image1.Width * image1.Height;
+                int matchingPixels = 0;
+
+                for (int x = 0; x < image1.Width; x++)
+                {
+                    for (int y = 0; y < image1.Height; y++)
+                    {
+                        if (image1.GetPixel(x, y).Equals(image2.GetPixel(x, y)))
+                        {
+                            matchingPixels++;
+                        }
+                    }
+                }
+
+                double similarity = (double)matchingPixels / totalPixels;
+                return similarity >= threshold;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error performing pixel-based comparison.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Asynchronously determines if two images are duplicates by comparing each pixel, after standardizing their dimensions.
+        /// </summary>
+        /// <param name="image1">First image to compare.</param>
+        /// <param name="image2">Second image to compare.</param>
+        /// <param name="threshold">Threshold for similarity ratio to consider images as duplicates.</param>
+        /// <returns>Task that returns true if images are considered duplicates.</returns>
+        public async Task<bool> AreDuplicates_PixelComparisonAsync(Bitmap image1, Bitmap image2, double threshold = 0.95)
+        {
+            return await Task.Run(() => AreDuplicates_PixelComparison(image1, image2, threshold));
+        }
+
+        /// <summary>
+        /// Compares two images using structural features to determine if they are duplicates.
+        /// </summary>
+        /// <param name="imagePath1">Path to the first image file.</param>
+        /// <param name="imagePath2">Path to the second image file.</param>
+        /// <param name="threshold">Threshold for SSIM to consider images as duplicates. Default is 0.95.</param>
+        /// <returns>True if the SSIM index is above the threshold, indicating high similarity.</returns>
+        public bool AreDuplicates_FeatureBased(string imagePath1, string imagePath2, double threshold = 0.95)
+        {
+            try
+            {
+                using (var image1 = new MagickImage(imagePath1))
+                using (var image2 = new MagickImage(imagePath2))
+                {
+                    // Compare using SSIM, which is a good measure of structural similarity
+                    double ssim = image1.Compare(image2, ErrorMetric.StructuralSimilarity);
+                    return ssim >= threshold;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error performing feature-based comparison.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Asynchronously determines if two images are duplicates by comparing their structural features.
+        /// </summary>
+        /// <param name="imagePath1">Path to the first image file.</param>
+        /// <param name="imagePath2">Path to the second image file.</param>
+        /// <param name="threshold">Threshold for SSIM to consider images as duplicates. Default is 0.95.</param>
+        /// <returns>Task that returns true if images are considered duplicates.</returns>
+        public async Task<bool> AreDuplicates_FeatureBasedAsync(string imagePath1, string imagePath2, double threshold = 0.95)
+        {
+            return await Task.Run(() => AreDuplicates_FeatureBased(imagePath1, imagePath2, threshold));
+        }
     }
 }
