@@ -37,7 +37,7 @@
             butScan = new Button();
             pBarScan = new ProgressBar();
             PreviewSelectedImage = new PictureBox();
-            Dvgvg = new Subro.Controls.DataGridViewGrouper(components);
+            //Dvgvg = new Subro.Controls.DataGridViewGrouper(components);
             butGroup = new Button();
             rbAvHash = new RadioButton();
             gbAlgoSelection = new GroupBox();
@@ -113,8 +113,8 @@
             // 
             // Dvgvg
             // 
-            Dvgvg.DataGridView = dgvDuplicates;
-            Dvgvg.Options = (Subro.Controls.GroupingOptions)resources.GetObject("Dvgvg.Options");
+            //Dvgvg.DataGridView = dgvDuplicates;
+            //Dvgvg.Options = (Subro.Controls.GroupingOptions)resources.GetObject("Dvgvg.Options");
             // 
             // butGroup
             // 
@@ -242,7 +242,6 @@
         private Button butScan;
         private ProgressBar pBarScan;
         private PictureBox PreviewSelectedImage;
-        private Subro.Controls.DataGridViewGrouper Dvgvg;
         private Button butGroup;
         private RadioButton rbAvHash;
         private GroupBox gbAlgoSelection;

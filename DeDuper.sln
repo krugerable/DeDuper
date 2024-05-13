@@ -1,11 +1,12 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeDuper", "DeDuper\DeDuper.csproj", "{CF8C4015-9859-4E6A-93AD-B81107B3953F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataGridViewGrouper", "..\DataGridViewGrouper\DataGridViewGrouper\DataGridViewGrouper.csproj", "{785A6FBB-2BA0-42BE-84C4-1703BCAD15D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "App\App.csproj", "{5753BCFD-4E8A-4E7F-875D-149679A7CFE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algo", "Algo\Algo.csproj", "{DC171459-7878-47CA-AC3F-FFFA7017FEDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +18,14 @@ Global
 		{CF8C4015-9859-4E6A-93AD-B81107B3953F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF8C4015-9859-4E6A-93AD-B81107B3953F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF8C4015-9859-4E6A-93AD-B81107B3953F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{785A6FBB-2BA0-42BE-84C4-1703BCAD15D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{785A6FBB-2BA0-42BE-84C4-1703BCAD15D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{785A6FBB-2BA0-42BE-84C4-1703BCAD15D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{785A6FBB-2BA0-42BE-84C4-1703BCAD15D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5753BCFD-4E8A-4E7F-875D-149679A7CFE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5753BCFD-4E8A-4E7F-875D-149679A7CFE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5753BCFD-4E8A-4E7F-875D-149679A7CFE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5753BCFD-4E8A-4E7F-875D-149679A7CFE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC171459-7878-47CA-AC3F-FFFA7017FEDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC171459-7878-47CA-AC3F-FFFA7017FEDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC171459-7878-47CA-AC3F-FFFA7017FEDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC171459-7878-47CA-AC3F-FFFA7017FEDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

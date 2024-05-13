@@ -59,7 +59,7 @@
 
         private void butGroup_Click(object sender, EventArgs e)
         {
-            Dvgvg.SetGroupOn(dgvDuplicates.Columns[0]);
+            //Dvgvg.SetGroupOn(dgvDuplicates.Columns[0]);
         }
 
         private void dgvDuplicates_RowEnter(object sender, DataGridViewCellEventArgs e)
