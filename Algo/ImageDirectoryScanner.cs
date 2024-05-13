@@ -1,7 +1,6 @@
 using System.ComponentModel;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
 
-namespace DeDuper
+namespace Algo
 {
     public class ImageDirectoryScanner
     {

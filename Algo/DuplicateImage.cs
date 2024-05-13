@@ -1,4 +1,4 @@
-namespace DeDuper
+namespace Algo
 {
     // Represents an image that has been identified as a duplicate.
     public class DuplicateImage

@@ -1,4 +1,4 @@
-﻿namespace DeDuper
+﻿namespace Algo
 {
     internal class ImageDuplicateDetectorOptions
     {

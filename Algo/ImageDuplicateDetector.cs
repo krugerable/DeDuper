@@ -1,8 +1,9 @@
-﻿using System.Drawing.Imaging;
+﻿using System.Drawing;
+using System.Drawing.Imaging;
 using System.Text;
 using ImageMagick;
 
-namespace DeDuper
+namespace Algo
 {
     public class ImageDuplicateDetector
     {
