@@ -16,5 +16,15 @@ namespace App
         {
             InitializeComponent();
         }
+
+        private void sfbSelectFolder_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void sfbStart_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
